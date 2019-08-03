@@ -79,16 +79,12 @@ while 1:
         im2[mouseData.getY(),mouseData.getX()] = 1
          
     if mouseData.getEvent() ==  cv2.EVENT_MOUSEMOVE:
-        #左クリックがドラッグされたら1マスずつ表示   
+        #左クリックがドラッグされたら10マスずつ表示   
         if mouseData.getFlags() == cv2.EVENT_FLAG_LBUTTON:
             im2[:,:] = 0
-            im1[mouseData.getY(),mouseData.getX()] = 1
-            im2[mouseData.getY(),mouseData.getX()] = 1
-        #右クリックがドラッグされたら10マスずつ表示       
-        if mouseData.getFlags() == cv2.EVENT_FLAG_RBUTTON:
-            im2[:,:] = 0
             im1[mouseData.getY()-5:mouseData.getY()+5,mouseData.getX()-5:mouseData.getX()+5] = 1
-            im2[mouseData.getY()-5:mouseData.getY()+5,mouseData.getX()-5:mouseData.getX()+5] = 1
+            im2[mouseData.getY()-5:mouseData.getY()+5,mouseData.getX()-5:mouseData.getX()+5] = 1      
+
             
     #右クリックが押されたらプログラム終了    
     if mouseData.getEvent() == cv2.EVENT_RBUTTONDOWN:
