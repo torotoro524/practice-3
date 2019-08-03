@@ -77,7 +77,7 @@ while 1:
         im1[mouseData.getY(),mouseData.getX()] = 1
         im2[mouseData.getY(),mouseData.getX()] = 1
         
-    #右クリックが押されたらプログラム終了    
+    #右クリックが押されたら10マスずつ表示    
     if mouseData.getEvent() == cv2.EVENT_RBUTTONDOWN:
         im2[:,:] = 0
         im1[mouseData.getY()-5:mouseData.getY()+5,mouseData.getX()-5:mouseData.getX()+5] = 1
@@ -116,6 +116,7 @@ while 1:
     m_fshift_1 = np.min(fshift_im1)
     cv2.imshow("Total sin wave",((fshift_im1 - m_fshift_1)/(M_fshift_1 - m_fshift_1) * 255).astype(uint8))
     
+    #Enterキーで終了する
     k = cv2.waitKey(1)
     if k == 13:
         break;
