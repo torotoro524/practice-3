@@ -5,12 +5,12 @@ input windowを左クリックをされたら1マスを表示、左クリック�
 #依存ライブラリ
 
 opencv-python -4.1.0
+
 numpy -1.16.2
 
 #コード全体
 
 import cv2
-
 
 
 import numpy as np
@@ -237,7 +237,7 @@ cv2.destroyAllWindows()
 print("Finished")
 
 
-12 ~ 20行目:高速フーリエ変換をつかうためにnumpyを実装し、astypeを使うためにuint8も実装
+13 ~ 20行目:高速フーリエ変換をつかうためにnumpyを実装し、astypeを使うためにuint8も実装
 
 24 ~ 98行目:http://whitecat-student.hatenablog.com/entry/2016/11/09/225631（Opencvで表示した画像にマウスクリックした場所を取得する方法 (Python)）より、マウスイベントの処理をしめしている。
 
