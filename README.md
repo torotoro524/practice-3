@@ -1,6 +1,6 @@
 #gif画像
 
-![1] (kadai2.gif) 
+![1](kadai2.gif) 
 
 ＃使い方
 
