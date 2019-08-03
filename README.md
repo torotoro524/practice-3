@@ -1,6 +1,8 @@
 ＃使い方
 
-input windowを左クリックをされたら1マスを表示、左クリックを押しながらドラッグすれば１０マス分表示し、右クリックを単体で押せばシステムは終了する
+input windowを左クリックを押されたら1マスを表示、左クリックを押しながらドラッグすれば１０マス分表示し、右クリックを押されたら10マスを表示、右クリックを押しながらドラッグすれば１０マス分表示する。
+
+Enterキーを押せばシステムは終了する
 
 #依存ライブラリ
 
@@ -12,12 +14,10 @@ numpy -1.16.2
 
 import cv2
 
-
 import numpy as np
 
-
-
 from numpy import uint8
+
 
 
 
@@ -155,8 +155,6 @@ mouseData = mouseParam(window_name)
 
 while 1:
 
-    cv2.waitKey(20)
-
     #左クリックが押されたら1マスずつ表示
 
     if mouseData.getEvent() == cv2.EVENT_LBUTTONDOWN:
@@ -167,13 +165,35 @@ while 1:
 
         im2[mouseData.getY(),mouseData.getX()] = 1
 
+        
+
+    #右クリックが押されたら10マスずつ表示    
+
+    if mouseData.getEvent() == cv2.EVENT_RBUTTONDOWN:
+
+        im2[:,:] = 0
+
+        im1[mouseData.getY()-5:mouseData.getY()+5,mouseData.getX()-5:mouseData.getX()+5] = 1
+
+        im2[mouseData.getY()-5:mouseData.getY()+5,mouseData.getX()-5:mouseData.getX()+5] = 1
+
          
 
     if mouseData.getEvent() ==  cv2.EVENT_MOUSEMOVE:
 
-        #左クリックがドラッグされたら10マスずつ表示   
+        #左クリックがドラッグされたら1マスずつ表示   
 
         if mouseData.getFlags() == cv2.EVENT_FLAG_LBUTTON:
+
+            im2[:,:] = 0
+
+            im1[mouseData.getY(),mouseData.getX()] = 1
+
+            im2[mouseData.getY(),mouseData.getX()] = 1
+
+        #右クリックがドラッグされたら10マスずつ表示       
+
+        if mouseData.getFlags() == cv2.EVENT_FLAG_RBUTTON:
 
             im2[:,:] = 0
 
@@ -183,14 +203,9 @@ while 1:
 
             
 
-    #右クリックが押されたらプログラム終了    
-
-    if mouseData.getEvent() == cv2.EVENT_RBUTTONDOWN:
-
-        break;
 
 
-
+        
 
     #input windowをクリックした点を白く表示
 
@@ -230,29 +245,38 @@ while 1:
 
     
 
+    #Enterキーで終了する
 
+    k = cv2.waitKey(1)
 
+    if k == 13:
+
+        break;
+
+   
 cv2.destroyAllWindows()            
 
 print("Finished")
 
 
-13 ~ 20行目:高速フーリエ変換をつかうためにnumpyを実装し、astypeを使うためにuint8も実装
+15 ~ 19行目:高速フーリエ変換をつかうためにnumpyを実装し、astypeを使うためにuint8も実装
 
 24 ~ 98行目:http://whitecat-student.hatenablog.com/entry/2016/11/09/225631（Opencvで表示した画像にマウスクリックした場所を取得する方法 (Python)）より、マウスイベントの処理をしめしている。
 
 112 ~ 126行目:フーリエ変換をし、それをスぺクトラムで表示。(np.fft.fft2()やnp.fft.fftshift()が高速フーリエ変換を示す)
 
-134 ~ 140, 196 ~ 198行目:マウスで指定するための真っ黒な画像（クリックされることで一部が白くなる使用）とその点でのsin波を出すための画像を表示。
+134 ~ 140, 210 ~ 212行目:マウスで指定するための真っ黒な画像（クリックされることで一部が白くなる使用）とその点でのsin波を出すための画像を表示。
 
 142 ~ 150行目:どのウィンドウに対して行われたマウスでの処理をマウスイベントとしてとらえるかを指定。（コールバックの指定）
 
-156 ~ 190行目:マウスイベントの処理。
+158 ~ 202行目:マウスイベントの処理。
 
-201 ~ 213行目:クリックされた点でのsin波を表示。(102行目でクリックされた点と関連づけ、フーリエ変換をし直し、103~107行でnp.fft.ifft2()を用い逆フーリエ変換を行う)
+216 ~ 228行目:クリックされた点でのsin波を表示。(102行目でクリックされた点と関連づけ、フーリエ変換をし直し、103~107行でnp.fft.ifft2()を用い逆フーリエ変換を行う)
 
-217 ~ 229行目:今までにクリックされたすべての点に対してまとめて101~107行目に行ったことを同じように行うことで、sin波を重ねあわせ、表示する。
+232 ~ 244行目:今までにクリックされたすべての点に対してまとめて101~107行目に行ったことを同じように行うことで、sin波を重ねあわせ、表示する。
 
-235行目:上のwhile文が終了すると同時に(breakされたら)ウィンドウをすべて消去する。
+248 ~ 254行目:
 
-237行目:コンソールにプログラムが終わったことを表示する。
+257行目:上のwhile文が終了すると同時に(breakされたら)ウィンドウをすべて消去する。
+
+259行目:コンソールにプログラムが終わったことを表示する。
